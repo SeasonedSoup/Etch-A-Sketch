@@ -1,14 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+button {
+    display: block;
+    margin: 10px auto 10px;
+    padding: 15px;
+}
 div.container {
     display: flex;
     flex-wrap: wrap;
+    width: 960px;
+    height: auto;
+    margin: 0 auto;
 
 }
 
 
 div.grid {
-    height: 100px;
-    width: 100px;
+    flex: 1;
     border: 10px solid black;
     padding: 20px;
 }
