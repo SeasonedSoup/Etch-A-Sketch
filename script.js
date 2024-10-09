@@ -9,8 +9,31 @@ let createButton = () => {
     body.insertBefore(resetButton, container);
 }
 
-const num = 256;
-let createDivs = () => {
+let resetGrid = () => {
+    const resetButton = document.querySelector('button');
+
+    resetButton.addEventListener('click', () => {
+        const container = document.querySelector('.container');
+        container.innerHTML = ''
+        replaceGrid();
+        ColorDivs();
+    })
+}
+
+let replaceGrid = () => {
+    let answerNum = prompt("Please enter a valid new grid size up to 100x100 ex:(64)");
+    answerNum = parseInt(answerNum);
+    if (answerNum < 101 && answerNum > 0) {
+        answerNum *= answerNum
+        createDivs(answerNum);
+    }
+    else {
+        replaceGrid();
+    }
+}
+
+let num = 256;
+let createDivs = (num) => {
     for (let i = 0; i < num; i++) {
         const div = document.createElement('div');
         div.classList.add('grid');
@@ -19,6 +42,7 @@ let createDivs = () => {
         console.log("CREATED")
     }
 }
+
 
 let ColorDivs = () => {
     const divs = document.querySelectorAll('.grid')
@@ -29,5 +53,6 @@ let ColorDivs = () => {
     })
 }
 createButton();
-createDivs();
+resetGrid();
+createDivs(num);
 ColorDivs();
