@@ -24,8 +24,7 @@ let replaceGrid = () => {
     let answerNum = prompt("Please enter a valid new grid size up to 100x100 ex:(64)");
     answerNum = parseInt(answerNum);
     if (answerNum < 101 && answerNum > 0) {
-        answerNum *= answerNum
-        createDivs(answerNum);
+        createDivs(answerNum * answerNum, answerNum);
     }
     else {
         replaceGrid();
@@ -33,13 +32,17 @@ let replaceGrid = () => {
 }
 
 let num = 256;
-let createDivs = (num) => {
+let createDivs = (num, sqrSize) => {
+    const flexibleSize = 100 / sqrSize;
     for (let i = 0; i < num; i++) {
         const div = document.createElement('div');
         div.classList.add('grid');
-
+        div.style.flexBasis = `${flexibleSize}%`;
+        div.style.opacity = '0.1';
+        div.dataset.interactions = 0;
+        div.dataset.colored = 'false';
+        
         container.appendChild(div);
-        console.log("CREATED")
     }
 }
 
@@ -48,11 +51,34 @@ let ColorDivs = () => {
     const divs = document.querySelectorAll('.grid')
     divs.forEach((div) => {
         div.addEventListener("mouseenter", () => {
-            div.style.backgroundColor = 'black';
+            if (div.dataset.colored === 'false'){
+                div.style.backgroundColor = generateRandomColor();
+                div.dataset.colored ='true'
+            }
+            else {
+                darkenDiv(div);
+            }
         })
     })
 }
+
+let darkenDiv = (div) => {
+    let interactions = parseInt(div.dataset.interactions);
+
+    if(interactions < 10) {
+        interactions++;
+        div.dataset.interactions = interactions;
+        div.style.opacity = (interactions * 0.1).toString(); 
+    }
+}
+let generateRandomColor = () => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    
+    return `rgb(${r}, ${g}, ${b})`;
+}
 createButton();
 resetGrid();
-createDivs(num);
+createDivs(num, Math.sqrt(num));
 ColorDivs();
