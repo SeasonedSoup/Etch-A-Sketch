@@ -40,7 +40,6 @@ let createDivs = (num, sqrSize) => {
         div.style.flexBasis = `${flexibleSize}%`;
         div.style.opacity = '0.1';
         div.dataset.interactions = 0;
-        div.dataset.colored = 'false';
         
         container.appendChild(div);
     }
@@ -51,13 +50,8 @@ let ColorDivs = () => {
     const divs = document.querySelectorAll('.grid')
     divs.forEach((div) => {
         div.addEventListener("mouseenter", () => {
-            if (div.dataset.colored === 'false'){
                 div.style.backgroundColor = generateRandomColor();
-                div.dataset.colored ='true'
-            }
-            else {
                 darkenDiv(div);
-            }
         })
     })
 }
